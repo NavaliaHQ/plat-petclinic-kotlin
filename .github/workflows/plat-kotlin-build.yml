@@ -82,11 +82,17 @@ jobs:
 
       - name: Extracting manifest variables
         run: |
-          ls
           MANIFEST_NAMESPACE=$(yq e '.namespace' platform-manifest.yml)
           MANIFEST_APP_NAME=$(yq e '.name' platform-manifest.yml)
           echo "MANIFEST_NAMESPACE=${MANIFEST_NAMESPACE}" >> $GITHUB_ENV
           echo "MANIFEST_APP_NAME=${MANIFEST_APP_NAME}" >> $GITHUB_ENV
+
+      - name: Checkout shared infra repo
+        uses: actions/checkout@v4
+        with:
+          repository: NavaliaHQ/plat-shared-infra-iac
+          ref: main
+          token: ${{ secrets.NAVALIA_GITHUB_TOKEN }}
 
       - id: 'auth'
         name: 'Authenticate to GCP'
@@ -97,14 +103,6 @@ jobs:
           workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
           service_account: "${{ secrets.GCP_SERVICE_ACCOUNT }}"
 
-      - name: Checkout shared infra repo
-        uses: actions/checkout@v4
-        with:
-          repository: NavaliaHQ/plat-shared-infra-iac
-          ref: main
-          token: ${{ secrets.NAVALIA_GITHUB_TOKEN }}
-
- 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
