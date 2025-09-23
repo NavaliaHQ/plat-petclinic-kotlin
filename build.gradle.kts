@@ -60,7 +60,7 @@ dependencies {
 
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
-    runtimeOnly("org.webjars:webjars-locator-lite:${webjarsLocatorLiteVersion}")
+    runtimeOnly("org.webjars:webjars-locator-lite:$webjarsLocatorLiteVersion")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
@@ -71,4 +71,3 @@ jib {
         tags = setOf(project.version.toString(), "latest")
     }
 }
-
