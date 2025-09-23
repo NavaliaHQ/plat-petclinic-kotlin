@@ -76,7 +76,7 @@ jobs:
         with:
           repository: NavaliaHQ/plat-shared-infra-iac
           ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.NAVALIA_GITHUB_TOKEN }}
 
       - name: Checkout platform manifest
         uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
           sparse-checkout: |
             platform-manifest.yml
           sparse-checkout-cone-mode: false
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.NAVALIA_GITHUB_TOKEN }}
           ref: main
 
       - name: Extracting manifest variables
