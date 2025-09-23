@@ -70,6 +70,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: NavaliaHQ/plat-shared-infra-iac
+          ref: main
 
       - name: Checkout platform manifest
         uses: actions/checkout@v4
@@ -77,6 +78,7 @@ jobs:
           sparse-checkout: |
             platform-manifest.yml
           sparse-checkout-cone-mode: false
+          ref: main
 
       - name: Extracting manifest variables
         run: |
