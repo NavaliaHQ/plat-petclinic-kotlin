@@ -89,8 +89,9 @@ jobs:
 
       - name: Extracting manifest variables
         run: |
+          ls
           MANIFEST_NAMESPACE=$(yq e '.namespace' platform-manifest.yml)
-          MANIFEST_APP_NAME=$(yq e '.app_name' platform-manifest.yml)
+          MANIFEST_APP_NAME=$(yq e '.name' platform-manifest.yml)
           echo "MANIFEST_NAMESPACE=${MANIFEST_NAMESPACE}" >> $GITHUB_ENV
           echo "MANIFEST_APP_NAME=${MANIFEST_APP_NAME}" >> $GITHUB_ENV
 

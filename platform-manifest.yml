@@ -1,0 +1,4 @@
+name: petclinic-reference-app
+namespace: reference-apps
+role: web
+language: kotlin
