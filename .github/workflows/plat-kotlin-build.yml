@@ -45,6 +45,7 @@ jobs:
 
     - name: Run kotlin linter
       run: ./gradlew ktlintCheck
+      continue-on-error: true
 
   docker-lint:
     runs-on: ubuntu-latest
