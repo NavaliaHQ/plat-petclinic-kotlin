@@ -11,28 +11,29 @@ pipeline:
         repoName: plat-petclinic-kotlin
         build: <+input>
   stages:
-    - stage:
-        name: Tests and Lint
-        identifier: Tests_and_Lint
-        description: ""
-        type: CI
-        spec:
-          cloneCodebase: true
-          caching:
-            enabled: true
-            override: true
-          buildIntelligence:
-            enabled: true
-          platform:
-            os: Linux
-            arch: Arm64
-          runtime:
-            type: Docker
+    - parallel:
+        - stage:
+            name: Unit Tests
+            identifier: Tests_and_Lint
+            description: ""
+            type: CI
             spec:
-              harnessImageConnectorRef: Docker_Hub
-          execution:
-            steps:
-              - parallel:
+              cloneCodebase: true
+              caching:
+                enabled: true
+                override: true
+                paths: []
+              buildIntelligence:
+                enabled: true
+              platform:
+                os: Linux
+                arch: Arm64
+              runtime:
+                type: Docker
+                spec:
+                  harnessImageConnectorRef: Docker_Hub
+              execution:
+                steps:
                   - step:
                       type: Run
                       name: Unit Tests
@@ -45,25 +46,67 @@ pipeline:
                           chmod +x ./gradlew
                           ./gradlew cleanTest test
                         imagePullPolicy: IfNotPresent
+            delegateSelectors:
+              - gualter-machine
+        - stage:
+            name: Hadolint
+            identifier: Hadolint
+            description: ""
+            type: CI
+            spec:
+              cloneCodebase: true
+              caching:
+                enabled: true
+                override: true
+              buildIntelligence:
+                enabled: true
+              platform:
+                os: Linux
+                arch: Arm64
+              runtime:
+                type: Docker
+                spec:
+                  harnessImageConnectorRef: Docker_Hub
+              execution:
+                steps:
                   - step:
                       type: Run
-                      name: KLint
-                      identifier: KLint
-                      spec:
-                        shell: Sh
-                        command: |-
-                          chmod +x ./gradlew
-                          ./gradlew ktlintCheck
-                  - step:
-                      type: Run
-                      name: Hadolint
-                      identifier: Hadolint
+                      name: Run
+                      identifier: Run
                       spec:
                         shell: Bash
                         command: |-
-                          wget -O hadolint https://github.com/hadolint/hadolint/releases/download/vX.Y.Z/hadolint-Linux-x86_64
+                          wget -O hadolint https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-linux-x86_64
                           chmod +x ./hadolint
                           ./hadolint --version
                           ./hadolint ./Dockerfile
-        delegateSelectors:
-          - gualter-machine
+        - stage:
+            name: KLint
+            identifier: KLint
+            description: ""
+            type: CI
+            spec:
+              cloneCodebase: true
+              caching:
+                enabled: true
+                override: true
+              buildIntelligence:
+                enabled: true
+              platform:
+                os: Linux
+                arch: Arm64
+              runtime:
+                type: Docker
+                spec:
+                  harnessImageConnectorRef: Docker_Hub
+              execution:
+                steps:
+                  - step:
+                      type: Run
+                      name: Run
+                      identifier: Run
+                      spec:
+                        shell: Bash
+                        command: |-
+                          chmod +x ./gradlew
+                          ./gradlew ktlintCheck
