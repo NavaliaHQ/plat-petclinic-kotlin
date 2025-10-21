@@ -77,7 +77,10 @@ pipeline:
                         connectorRef: Docker_Hub
                         image: hadolint/hadolint:latest-debian
                         shell: Bash
-                        command: hadolint ./Dockerfile
+                        command: |-
+                          echo Starting Hadolint
+                          hadolint ./Dockerfile
+                          echo Finished!
                         imagePullPolicy: IfNotPresent
             delegateSelectors:
               - gualter-machine
