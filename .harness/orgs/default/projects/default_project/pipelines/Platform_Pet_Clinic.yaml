@@ -36,7 +36,10 @@ pipeline:
                   name: Unit Tests
                   identifier: Unit_Tests
                   spec:
+                    connectorRef: Docker_Hub
+                    image: openjdk:17-jdk
                     shell: Sh
                     command: |-
-                      sudo apt update
-                        sudo apt install openjdk-17-jdk -y
+                      chmod +x gradlew
+                      ./gradlew cleanTest test
+                    imagePullPolicy: IfNotPresent
