@@ -25,7 +25,7 @@ pipeline:
             enabled: true
           platform:
             os: Linux
-            arch: Amd64
+            arch: Arm64
           runtime:
             type: Docker
             spec:
@@ -44,5 +44,3 @@ pipeline:
                       chmod +x gradlew
                       ./gradlew cleanTest test
                     imagePullPolicy: IfNotPresent
-        delegateSelectors:
-          - docker-delegate
