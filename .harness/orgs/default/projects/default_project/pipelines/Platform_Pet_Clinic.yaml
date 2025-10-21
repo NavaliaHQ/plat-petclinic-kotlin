@@ -76,7 +76,7 @@ pipeline:
                       spec:
                         connectorRef: Docker_Hub
                         image: hadolint/hadolint
-                        shell: Bash
+                        shell: Sh
                         command: hadolint ./Dockerfile
             delegateSelectors:
               - gualter-machine
