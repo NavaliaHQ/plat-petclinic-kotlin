@@ -39,7 +39,7 @@ pipeline:
                   spec:
                     connectorRef: Docker_Hub
                     image: openjdk:17-jdk
-                    shell: Sh
+                    shell: Bash
                     command: |-
                       chmod +x gradlew
                       ./gradlew cleanTest test
