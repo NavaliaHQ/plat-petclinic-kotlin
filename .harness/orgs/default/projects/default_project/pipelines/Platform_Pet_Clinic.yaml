@@ -41,7 +41,8 @@ pipeline:
                     image: openjdk:17-jdk
                     shell: Bash
                     command: |-
-                      chmod +x gradlew
+                      echo Testing
+                      chmod +x ./gradlew
                       ./gradlew cleanTest test
                     imagePullPolicy: IfNotPresent
         delegateSelectors:
