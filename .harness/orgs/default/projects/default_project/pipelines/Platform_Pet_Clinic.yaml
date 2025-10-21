@@ -43,3 +43,5 @@ pipeline:
                       chmod +x gradlew
                       ./gradlew cleanTest test
                     imagePullPolicy: IfNotPresent
+        delegateSelectors:
+          - docker-delegate
