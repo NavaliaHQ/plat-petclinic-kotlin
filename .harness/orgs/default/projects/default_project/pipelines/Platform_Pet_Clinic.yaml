@@ -75,9 +75,10 @@ pipeline:
                       identifier: Run
                       spec:
                         connectorRef: Docker_Hub
-                        image: hadolint/hadolint
-                        shell: Sh
+                        image: hadolint/hadolint:latest-debian
+                        shell: Bash
                         command: hadolint ./Dockerfile
+                        imagePullPolicy: IfNotPresent
             delegateSelectors:
               - gualter-machine
         - stage:
