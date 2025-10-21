@@ -1,0 +1,42 @@
+pipeline:
+  name: Platform Pet Clinic
+  identifier: Platform_Pet_Clinic
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.NavaliaHQ
+        repoName: plat-petclinic-kotlin
+        build: <+input>
+  stages:
+    - stage:
+        name: Tests and Lint
+        identifier: Tests_and_Lint
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Unit Tests
+                  identifier: Unit_Tests
+                  spec:
+                    shell: Sh
+                    command: |-
+                      sudo apt update
+                        sudo apt install openjdk-17-jdk -y
