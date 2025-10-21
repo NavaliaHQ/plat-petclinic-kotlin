@@ -74,12 +74,10 @@ pipeline:
                       name: Run
                       identifier: Run
                       spec:
+                        connectorRef: Docker_Hub
+                        image: hadolint/hadolint
                         shell: Bash
-                        command: |-
-                          wget -O hadolint https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-linux-x86_64
-                          chmod +x ./hadolint
-                          ./hadolint --version
-                          ./hadolint ./Dockerfile
+                        command: hadolint ./Dockerfile
             delegateSelectors:
               - gualter-machine
         - stage:
