@@ -80,6 +80,8 @@ pipeline:
                           chmod +x ./hadolint
                           ./hadolint --version
                           ./hadolint ./Dockerfile
+            delegateSelectors:
+              - gualter-machine
         - stage:
             name: KLint
             identifier: KLint
@@ -110,3 +112,5 @@ pipeline:
                         command: |-
                           chmod +x ./gradlew
                           ./gradlew ktlintCheck
+            delegateSelectors:
+              - gualter-machine
