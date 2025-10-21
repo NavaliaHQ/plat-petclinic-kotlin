@@ -38,7 +38,7 @@ pipeline:
                   identifier: Unit_Tests
                   spec:
                     connectorRef: Docker_Hub
-                    image: openjdk:17-jdk
+                    image: openjdk:17-ea-slim-buster
                     shell: Bash
                     command: |-
                       echo Testing
