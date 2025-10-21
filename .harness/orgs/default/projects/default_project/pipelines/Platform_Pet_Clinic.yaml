@@ -32,18 +32,38 @@ pipeline:
               harnessImageConnectorRef: Docker_Hub
           execution:
             steps:
-              - step:
-                  type: Run
-                  name: Unit Tests
-                  identifier: Unit_Tests
-                  spec:
-                    connectorRef: Docker_Hub
-                    image: openjdk:17-ea-slim-buster
-                    shell: Bash
-                    command: |-
-                      echo Testing
-                      chmod +x ./gradlew
-                      ./gradlew cleanTest test
-                    imagePullPolicy: IfNotPresent
+              - parallel:
+                  - step:
+                      type: Run
+                      name: Unit Tests
+                      identifier: Unit_Tests
+                      spec:
+                        connectorRef: Docker_Hub
+                        image: openjdk:17-ea-slim-buster
+                        shell: Bash
+                        command: |-
+                          chmod +x ./gradlew
+                          ./gradlew cleanTest test
+                        imagePullPolicy: IfNotPresent
+                  - step:
+                      type: Run
+                      name: KLint
+                      identifier: KLint
+                      spec:
+                        shell: Sh
+                        command: |-
+                          chmod +x ./gradlew
+                          ./gradlew ktlintCheck
+                  - step:
+                      type: Run
+                      name: Hadolint
+                      identifier: Hadolint
+                      spec:
+                        shell: Bash
+                        command: |-
+                          wget -O hadolint https://github.com/hadolint/hadolint/releases/download/vX.Y.Z/hadolint-Linux-x86_64
+                          chmod +x ./hadolint
+                          ./hadolint --version
+                          ./hadolint ./Dockerfile
         delegateSelectors:
           - gualter-machine
